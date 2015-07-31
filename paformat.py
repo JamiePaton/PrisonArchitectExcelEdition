@@ -13,16 +13,31 @@ import sys
 import logging
 import unittest
 import hypothesis as hs
-'    BEGIN "67 41"      Mat ConcreteFloor  Con 88.99933  Ind true  END'
-'    BEGIN "67 41"      Mat ConcreteFloor  Con 88.99933  Ind  true  END'
-'    BEGIN "68 37"      Mat PavingStone  Con 96.65614  END'
-'    BEGIN "68 35"      Con 22.44483  END'
 
-indoor_materials = {'Dirt': False,
-                    'Sand': False,
-                    'PavingStone': False,
-                    'ConcreteFloor': True,
-                    'Grass': False}
+indoor_materials = {'BrickWall' : True,
+                    'CeramicFloor' : True,
+                    'ConcreteFloor' : True,
+                    'ConcreteTiles' : True,
+                    'ConcreteWall' : True,
+                    'Dirt' : False,
+                    'FancyTiles' : True,
+                    'Fence' : False,
+                    'Grass' : False,
+                    'Gravel' : False,
+                    'LongGrass' : False,
+                    'MarbleTiles' : True,
+                    'MetalFloor' : True,
+                    'MosaicFloor' : True,
+                    'Mud' : False,
+                    'PavingStone' : False,
+                    'PerimeterWall' : False,
+                    'Road' : False,
+                    'Sand' : False,
+                    'Stone' : False,
+                    'Water' : False,
+                    'WhiteTiles' : True,
+                    'WoodenFloor' : True}
+
 
 class Cell(object):
     def __init__(self, x, y, material='Dirt', condition=100.0, indoors=False):

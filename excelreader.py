@@ -21,6 +21,7 @@ import os
 def main(args):
     wb = xlwings.Workbook(os.path.join(os.getcwd(), 'prisontest.xlsx'), app_visible=False)
     print xlwings.Range('Small', 'E2').color
+    wb.close()
 class Testing(unittest.TestCase):
     """
     

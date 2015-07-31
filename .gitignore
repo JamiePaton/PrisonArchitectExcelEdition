@@ -52,4 +52,5 @@ logs/
 
 # pa files
 *.prison
-*.xlsx
+~$*.xlsm
+~$*.xlsx
