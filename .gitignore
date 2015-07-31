@@ -54,3 +54,5 @@ logs/
 *.prison
 ~$*.xlsm
 ~$*.xlsx
+*.txt
+*.dat

@@ -53,7 +53,7 @@ class Cell(object):
                                                                                self.y,
                                                                                self.material,
                                                                                self.condition,
-                                                                               self.indoors)
+                                                                               str(self.indoors).lower())
         elif self.material != 'Dirt' and self.indoors is False:
             return '    BEGIN "{} {}"      Mat {}  Con {}  END'.format(self.x, 
                                                                        self.y,

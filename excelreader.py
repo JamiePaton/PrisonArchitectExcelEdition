@@ -19,20 +19,42 @@ import os
 import pprint
 import paformat
 
+import re
+import string
+
+def col2num(col):
+    num = 0
+    for c in col:
+        if c in string.ascii_letters:
+            num = num * 26 + (ord(c.upper()) - ord('A')) + 1
+    return num
+
 def main(args):
     logger = logging.getLogger(__name__)
     logger.info('opening excel document')
-    wb = xlwings.Workbook(os.path.join(os.getcwd(), 'prisontest.xlsx'), app_visible=False)
+    wb = xlwings.Workbook(os.path.join(os.getcwd(), 'prisontest.xlsm'), app_visible=False)
     
-    colours = build_material_dict()
-    materials = build_material_array()
-    
+    materials = build_material_dict()
+#    pprint.pprint(materials)
+    logger.info('reading cell colours')
+    cells = []
+#    for cell in xlwings.Range('Small', 'B2:C3'):
+    for cell in xlwings.Range('Small', 'B2:CV81'):
+#        print cell.get_address(False, False)
+        address = re.split('(\d+)', cell.get_address(False, False))
+#        print col2num(address[0]), address[1]
+        c = paformat.Cell(col2num(address[0])-2, int(address[1])-2,
+                                  material=materials[str(cell.color)])
+        cells.append(c)
+        
+    wb.close()
+    logger.info('saving cell data')
+    with open('test.txt', 'w') as f:
+        f.write('\n'.join([str(cell) for cell in cells]))
 #    print colours['(118, 147, 60)']
     logger.info('closing excel document')
-    wb.close()
 
-def build_material_array():
-    pass
+    
 
 def build_material_dict():
     material_colours = {}
@@ -67,7 +89,7 @@ class Testing(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.DEBUG)
+    logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger(__name__)
     logger.info(''.join([TITLE, ' v', VERSION, ' ', AUTHOR]))
     sys.exit(main(sys.argv))
