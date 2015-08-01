@@ -69,11 +69,20 @@ class SaveGame(jsonobject.JSONObject):
             elif line[:5] == "END" and finish is None:
                 finish = i + 1
                 name = self.data[start][5:].strip()
-                print "\tPARSING\t{0}".format(name)
-                self.game[name] = pyparsing.nestedExpr('BEGIN', 
-                          'END').parseString(' '.join(self.data[start:finish])).asList()
+                print "\tPARSING\t{0}".format(name)#
+                try:
+                    setattr(self, name.lower(),
+                            getattr(self, 'parse_{}'.format(name.lower())
+                            )(' '.join(self.data[start:finish])))
+                except AttributeError:
+                    logger.exception('\nparser for {} does not exist'.format(name))
+#                self.game[name] = pyparsing.nestedExpr('BEGIN', 
+#                          'END').parseString(' '.join(self.data[start:finish])).asList()
                 start = None
                 finish = None
+    
+    def parse_cells(self, text):
+        return "parsing cells.............."
                 
 
     @staticmethod
@@ -86,7 +95,9 @@ def main(args):
     import pprint
 #    
     
-#    s = SaveGame('testing1.prison')
+    s = SaveGame('testing1.prison')
+    print
+    print s.cells
     print
 #    pprint.pprint(s.game['Construction'])
 #    raw_input("Exit...")
